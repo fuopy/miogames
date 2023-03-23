@@ -1,0 +1,31 @@
+<script>
+var openFile = function(event) {
+  var input = event.target;
+
+  var reader = new FileReader();
+  reader.onload = function() {
+    var text = reader.result;
+    var node = document.getElementById('output');
+	var bruh = '';
+	reader.result.split('').forEach((e)=>{
+		bruh += e.charCodeAt(0).toString(16).padStart(2, '0').toUpperCase();
+	});
+    <!-- node.innerText = bruh; -->
+	
+	var link = document.createElement('a');
+	var file = new Blob([bruh], { type: 'text/plain' });
+	link.href = URL.createObjectURL(file);
+	link.download = input.files[0].name + '.txt';
+	link.click();
+	URL.revokeObjectURL(link.href);
+	
+
+	
+  };
+  reader.readAsBinaryString(input.files[0]);
+};
+</script>
+<input type='file' onchange='openFile(event)'><br>
+<!-- <textarea id='output'> -->
+
+<!-- </textarea> -->
